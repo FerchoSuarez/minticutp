@@ -1,0 +1,47 @@
+paso 1
+
+CREATE DATABASE IF NOT EXISTS reserva_hotel;
+
+paso 2
+
+USE reserva_hotel;
+CREATE TABLE if NOT EXISTS habitacion (
+	id_habitacion INT(15)NOT NULL,
+	piso VARCHAR(50) DEFAULT NULL,
+	tipo VARCHAR(50) DEFAULT NULL,
+	ciudad VARCHAR(50) DEFAULT NULL,
+	disponible INT(15) DEFAULT NULL,
+	novedad TINYINT(4) DEFAULT NULL,
+	PRIMARY KEY (id_habitacion)
+) ENGINE=INNODB DEFAULT CHARSET=LATIN1;
+
+
+paso 3
+
+USE reserva_hotel;
+CREATE TABLE if NOT EXISTS usuario (
+	username VARCHAR(50) NOT NULL,
+	contrasena VARCHAR(100) DEFAULT NULL,
+	nombre VARCHAR(100) DEFAULT NULL,
+	apellidos VARCHAR(100) DEFAULT NULL,
+	ciudad_origen VARCHAR(50) DEFAULT NULL,
+	email VARCHAR(100) DEFAULT NULL,
+	celular VARCHAR(50) DEFAULT NULL,
+	premium TINYINT(4) DEFAULT NULL,
+	PRIMARY KEY (username)
+) ENGINE=INNODB DEFAULT CHARSET=LATIN1;
+
+
+
+paso 4
+
+USE reserva_hotel;
+CREATE TABLE if NOT EXISTS reservar (
+	id_habitacion INT(11)NOT NULL,
+	username VARCHAR(50) NOT NULL,
+	fecha_ingreso DATETIME NOT NULL,
+	PRIMARY KEY (id_habitacion, username, fecha_ingreso) USING BTREE,
+	KEY FK_usuario (username),
+	CONSTRAINT FK_habitacion FOREIGN KEY (id_habitacion) REFERENCES habitacion (id_habitacion),
+	CONSTRAINT FK_usuario FOREIGN KEY (username) REFERENCES usuario (username)
+) ENGINE=INNODB DEFAULT CHARSET=LATIN1;
